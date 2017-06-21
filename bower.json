@@ -1,0 +1,20 @@
+{
+  "name": "ansible-slides",
+  "authors": [
+    "Nic Wortel <nic@nicwortel.nl>"
+  ],
+  "description": "Slides for a presentation about Ansible",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "reveal.js": "^3.5.0"
+  }
+}
