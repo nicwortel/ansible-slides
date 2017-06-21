@@ -63,6 +63,25 @@
                 </section>
 
                 <section>
+                    <h2>Playbooks</h2>
+
+                    <pre><code data-trim class="yml">
+                        ---
+                        - hosts: webservers
+                          become: yes
+                          tasks:
+                            - name: Install PHP
+                              apt:
+                                pkg: php
+                                state: latest
+                            - name: Copy php.ini
+                              copy:
+                                src: php.ini
+                                dest: /etc/php/7.1/cli/php.ini
+                    </code></pre>
+                </section>
+
+                <section>
                     <h2>More information</h2>
 
                     <ul>
