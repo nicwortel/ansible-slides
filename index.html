@@ -16,6 +16,10 @@
                 </section>
 
                 <section>
+                    <p>Made with <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></p>
+                </section>
+
+                <section>
                     <section>
                         <h2>What is Ansible?</h2>
 
@@ -32,6 +36,16 @@
                             <li class="fragment">SSH for communication (secure)</li>
                         </ul>
                     </section>
+                </section>
+
+                <section>
+                    <h2>What can Ansible be used for?</h2>
+
+                    <ul>
+                        <li>Server provisioning (installing the required software)</li>
+                        <li>Configuration management</li>
+                        <li>Application deployment</li>
+                    </ul>
                 </section>
 
                 <section>
@@ -271,6 +285,40 @@
                               roles:
                                 - mysql
                         </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Ansible + Vagrant</h2>
+
+                        <pre><code data-trim>
+                            Vagrant.configure(2) do |config|
+                              # ...
+
+                              config.vm.provision "ansible" do |ansible|
+                                ansible.playbook = "playbook.yml"
+                              end
+                            end
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Ansible Local</h2>
+
+                        <p>Executes Ansible on the guest machine</p>
+
+                        <p>Useful when Windows support is required</p>
+
+                        <pre><code data-trim>
+                        Vagrant.configure(2) do |config|
+                          # ...
+
+                          config.vm.provision "ansible_local" do |ansible|
+                            ansible.playbook = "playbook.yml"
+                          end
+                        end
+                    </code></pre>
                     </section>
                 </section>
 
