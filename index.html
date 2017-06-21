@@ -82,6 +82,199 @@
                 </section>
 
                 <section>
+                    <section>
+                        <h2>Modules</h2>
+                    </section>
+
+                    <section>
+                        <code>apt</code>
+
+                        <pre><code data-trim class="yaml">
+                            - name: Install the "php" package
+                              apt:
+                                name: php
+                                state: present
+
+                            - name: Install and/or update "php" to the latest version
+                              apt:
+                                name: php
+                                state: latest
+
+                            - name: Remove the "php" package
+                              apt:
+                                name: php
+                                state: absent
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <code>copy</code>
+
+                        <pre><code data-trim class="yaml">
+                            - name: Copy a file to the server
+                              copy:
+                                src: php.ini
+                                dest: /etc/php/7.1/cli/php.ini
+
+                            - name: Copy a file with specific owner, group and mode
+                              copy:
+                                src: foo.txt
+                                dest: /var/www/foo.txt
+                                owner: root
+                                group: root
+                                mode: 0600
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <code>cron</code>
+
+                        <pre><code data-trim class="yaml">
+                            # Creates an entry like "0 5,2 * * ls -alh > /dev/null"
+                            - name: Creates a cronjob
+                              cron:
+                                name: Check dirs
+                                minute: '0'
+                                hour: '5,2'
+                                job: 'ls -alh > /dev/null'
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <code>file</code>
+
+                        <pre><code data-trim class="yaml">
+                            - file:
+                                path: /etc/foo.conf
+                                owner: foo
+                                group: foo
+                                mode: 0644
+
+                            - file:
+                                src: /file/to/link/to
+                                dest: /path/to/symlink
+                                state: link
+
+                            - file:
+                                path: /etc/some_directory
+                                state: directory
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <code>template</code>
+
+                        <pre><code data-trim class="yaml">
+                            - name: Create the virtualhost file
+                              template:
+                                src: virtualhost.conf.j2
+                                dest: /etc/apache2/sites-available/000-default.conf
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Other useful modules</h2>
+
+                        <ul>
+                            <li><code>mysql_db</code>: Adds or removes MySQL databases from a remote host</li>
+                            <li><code>mysql_user</code>: Adds or removes a user from a MySQL database</li>
+                            <li><code>newrelic_deployment</code>: Notifies NewRelic about app deployments</li>
+                            <li><code>user</code>: Manages user accounts</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Loops</h2>
+
+                    <pre><code data-trim class="yaml">
+                        - name: Enable Apache modules
+                          apache2_module:
+                            name: '{{ item }}'
+                            state: present
+                          with_items:
+                            - rewrite
+                            - ssl
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Templates (Jinja)</h2>
+
+                    <pre><code data-trim class="jinja">
+                        Foo: {{ variable }}
+                    </code></pre>
+
+                    <pre><code data-trim class="jinja">
+                        {% for item in list %}
+                            Bar
+                        {% endfor %}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Handlers</h2>
+
+                    <p>Task</p>
+                    <pre><code data-trim class="yaml">
+                        - name: Edit configuration file
+                          copy:
+                            src: ssl.conf
+                            dest: /etc/apache2/conf-available/ssl.conf
+                          notify: Restart Apache
+                    </code></pre>
+
+                    <p>Handler</p>
+                    <pre><code data-trim class="yaml">
+                        ---
+                        - name: Restart Apache
+                          service:
+                            name: apache2
+                            state: restarted
+                    </code></pre>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Roles</h2>
+
+                        <pre><code data-trim>
+                            roles/
+                                apache/
+                                    files/
+                                    templates/
+                                    tasks/
+                                    handlers/
+                                    vars/
+                                    defaults/
+                                    meta/
+                                php/
+                                mysql/
+                                etc.
+                            playbook.yml
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Using roles in a playbook</h2>
+
+                        <pre><code data-trim class="yml">
+                            ---
+                            - hosts: webservers
+                              become: yes
+                              roles:
+                                - apache
+                                - php
+
+                            - hosts: databases
+                              become: yes
+                              roles:
+                                - mysql
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
                     <h2>More information</h2>
 
                     <ul>
