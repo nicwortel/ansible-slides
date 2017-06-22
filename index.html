@@ -7,6 +7,16 @@
         <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.css" />
         <link rel="stylesheet" href="bower_components/reveal.js/css/theme/white.css" />
         <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css">
+
+        <style>
+            .container {
+                display: flex;
+            }
+
+            .col {
+                flex: 1;
+            }
+        </style>
     </head>
     <body>
         <div class="reveal">
@@ -284,6 +294,79 @@
                               become: yes
                               roles:
                                 - mysql
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Best practices</h2>
+                    </section>
+
+                    <section>
+                        <h2>Use roles</h2>
+                    </section>
+
+                    <section>
+                        <h2>Use the readable YAML syntax</h2>
+
+                        <div>
+                            <pre><code data-trim class="yaml">
+                                - name: Write the apache config file
+                                  template: src=/srv/httpd.j2 dest=/etc/httpd.conf user=www-data group=www-data mode=0644
+                            </code></pre>
+
+                            <pre><code data-trim class="yaml">
+                                - name: Write the apache config file
+                                  template:
+                                    src: /srv/httpd.j2
+                                    dest: /etc/httpd.conf
+                                    user: www-data
+                                    group: www-data
+                                    mode: 0644
+                            </code></pre>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Use separate inventories for environments</h2>
+
+                        <div class="container">
+                            <div class="col">
+                                <p>production.ini</p>
+
+                                <pre><code data-trim class="ini">
+                                    [webservers]
+                                    web01.prod.example.com
+                                    web02.prod.example.com
+
+                                    [databases]
+                                    db01.prod.example.com
+                                </code></pre>
+                            </div>
+
+                            <div class="col">
+                                <p>test.ini</p>
+
+                                <pre><code data-trim class="ini">
+                                    [webservers]
+                                    web01.test.example.com
+
+                                    [databases]
+                                    db01.test.example.com
+                                </code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Use rolling updates</h2>
+
+                        <pre><code data-trim class="yaml">
+                            - hosts: webservers
+                              serial: 3
+                              roles:
+                                - ...
                         </code></pre>
                     </section>
                 </section>
