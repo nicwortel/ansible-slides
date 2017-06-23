@@ -318,6 +318,21 @@
                     </section>
 
                     <section>
+                        <h2>Always name tasks</h2>
+
+                        <pre><code data-trim class="yaml">
+                            - ufw:
+                                state: enabled
+                        </code></pre>
+
+                        <pre><code data-trim class="yaml">
+                            - name: Enable the firewall
+                              ufw:
+                                state: enabled
+                        </code></pre>
+                    </section>
+
+                    <section>
                         <h2>Use the readable YAML syntax</h2>
 
                         <div>
